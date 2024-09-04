@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  ::selection {
+    @apply bg-peach text-white;
+  }
+
+  @font-face {
+    font-family: "Suisse Screen";
+    src: url("/fonts/SuisseScreen-Regular-WebXL.woff2") format("woff2");
+    font-weight: 400;
+  }
+
+  @font-face {
+    font-family: "Suisse Screen";
+    src: url("/fonts/SuisseScreen-SemiBold-WebXL.woff2") format("woff2");
+    font-weight: 600;
+  }
+
+  @font-face {
+    font-family: "Suisse Screen";
+    src: url("/fonts/SuisseScreen-Medium-WebXL.woff2") format("woff2");
+    font-weight: 500;
+  }
+
+  @font-face {
+    font-family: "Suisse Screen";
+    src: url("/fonts/SuisseScreen-Light-WebXL.woff2") format("woff2");
+    font-weight: 300;
+  }
+
+  [type="checkbox"] {
+    @apply w-4 h-4;
+  }
+}
+
+@layer utilities {
+  .overflow-shadow {
+    color: rgba(102, 74, 104, 1);
+    -webkit-overflow-scrolling: touch;
+    overflow-scrolling: touch;
+
+    background-image: linear-gradient(to right, white, white),
+      linear-gradient(to right, white, white),
+      linear-gradient(to right, rgba(0, 0, 0, 0.3), rgba(255, 255, 255, 0)),
+      linear-gradient(to left, rgba(0, 0, 0, 0.3), rgba(255, 255, 255, 0));
+    background-repeat: no-repeat;
+    background-color: white;
+    background-position: left center, right center, left center, right center;
+    background-size: 10px 100%, 10px 100%, 10px 100%, 10px 100%;
+    background-attachment: local, local, scroll, scroll;
+  }
+
+  .overflow-shadow-vertical {
+    background-image: linear-gradient(
+        to top,
+        var(--overflow-shadow-bg, white),
+        var(--overflow-shadow-bg, white)
+      ),
+      linear-gradient(
+        to top,
+        var(--overflow-shadow-bg, white),
+        var(--overflow-shadow-bg, white)
+      ),
+      linear-gradient(to top, rgba(0, 0, 0, 0.3), rgba(255, 255, 255, 0)),
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(255, 255, 255, 0));
+    background-position: bottom center, top center, bottom center, top center;
+    background-color: var(--overflow-shadow-bg, white);
+    background-repeat: no-repeat;
+    background-size: 100% 20px, 100% 20px, 100% 10px, 100% 10px;
+    background-attachment: local, local, scroll, scroll;
+  }
+}
