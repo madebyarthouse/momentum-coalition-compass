@@ -370,7 +370,7 @@ const Credits = ({ className }: { className?: string }) => {
         Code sowie Daten sind{" "}
         <a
           className="underline font-semibold"
-          href="https://github.com/madebyarthouse/momentum-election-compass"
+          href="https://github.com/madebyarthouse/momentum-coalition-compass"
           target="_blank"
           rel="noopener"
         >
