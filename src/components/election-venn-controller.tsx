@@ -187,9 +187,9 @@ export const ElectionVennController = ({
           <code className="text-sm w-full  max-h-[400px]">
             <pre className="overflow-auto whitespace-pre bg-white p-5">
               {`
-  <link rel="stylesheet" href="https://momentum-wahlkabine-analyse.pages.dev/styles.css" />
+  <link rel="stylesheet" href="https://momentum-coalition-compass.pages.dev/styles.css" />
   <div id="election-venn" class="py-8 md:py-10 px-2 md:px-5 lg:px-10 twp"></div>
-  <script src="https://momentum-wahlkabine-analyse.pages.dev/momentum-venn.js"></script>
+  <script src="https://momentum-coalition-compass.pages.dev/momentum-venn.js"></script>
 
   <script>
     /* prettier-ignore */
@@ -199,7 +199,7 @@ export const ElectionVennController = ({
     window.hydrateElectionVennController({
       election: election,
       /* defaultSelectedParties: defaultSelectedParties, */
-      sourcePath: "https://momentum-wahlkabine-analyse.pages.dev",
+      sourcePath: "https://momentum-coalition-compass.pages.dev",
       breakPoint: "tablet",
       /* defaultSelectedParties: defaultSelectedParties, */
       /* resetToDefault = true, */
