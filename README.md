@@ -50,4 +50,3 @@ This is a pure client-side application and can be deployed to any (static) hosti
 Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International.
 
 See [LICENSE](./LICENSE.md)
-# momentum-election-compass
