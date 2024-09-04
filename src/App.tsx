@@ -58,7 +58,7 @@ function App() {
       : null;
 
   useEffect(() => {
-    fetch("/data-minimal.json")
+    fetch("/data-minimal-latest.json")
       .then((response) => response.json())
       .then((data) => {
         setData(data);
