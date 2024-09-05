@@ -110,6 +110,7 @@ export const VennPage = ({
             Anzeige-Modus ({combinations.length}):
           </span>
           <select
+            className="px-3 py-2"
             value={mode}
             onChange={(event) =>
               setMode(

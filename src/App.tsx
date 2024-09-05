@@ -99,7 +99,7 @@ function App() {
           <select
             value={selectedElectionId ?? data?.[0]?._id}
             onChange={(event) => setSelectedElectionId(event.target.value)}
-            className="w-full"
+            className="w-full px-4 py-3"
             id="election"
             name="election"
           >

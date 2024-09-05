@@ -78,10 +78,10 @@ export default {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   plugins: [require('@tailwindcss/typography'), require("tailwind-scrollbar"), require('@tailwind-plugin/expose-colors')({
     extract: ['lightBeige', 'peach', 'violet', 'green']
-  }), scopedPreflightStyles({
+  }), require('@tailwindcss/forms'), scopedPreflightStyles({
     isolationStrategy: isolateInsideOfContainer('.twp', {
       except: '.no-twp', // optional, to exclude some elements under .twp from being preflighted, like external markup
     }),
-  }), require('@tailwindcss/forms'),],
+  }),],
 }
 
