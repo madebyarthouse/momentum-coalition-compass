@@ -92,28 +92,30 @@ function App() {
           </span>
         </div>
 
-        <div className="flex flex-col gap-1 px-4 lg:border-b border-black py-5">
-          <label htmlFor="election" className="font-semibold">
-            Wahl auswählen:
-          </label>
-          <select
-            value={selectedElectionId ?? data?.[0]?._id}
-            onChange={(event) => setSelectedElectionId(event.target.value)}
-            className="w-full px-4 py-3"
-            id="election"
-            name="election"
-          >
-            {!data && <option>Loading...</option>}
-            {data?.map((election) => (
-              <option
-                value={election._id}
-                key={`election-select-${election._id}`}
-              >
-                {election.title}
-              </option>
-            ))}
-          </select>
-        </div>
+        {data && data?.length > 1 ? (
+          <div className="flex flex-col gap-1 px-4 lg:border-b border-black py-5">
+            <label htmlFor="election" className="font-semibold">
+              Wahl auswählen:
+            </label>
+            <select
+              value={selectedElectionId ?? data?.[0]?._id}
+              onChange={(event) => setSelectedElectionId(event.target.value)}
+              className="w-full px-4 py-3"
+              id="election"
+              name="election"
+            >
+              {!data && <option>Loading...</option>}
+              {data?.map((election) => (
+                <option
+                  value={election._id}
+                  key={`election-select-${election._id}`}
+                >
+                  {election.title}
+                </option>
+              ))}
+            </select>
+          </div>
+        ) : null}
         {selectedElection && (
           <div
             className={clsx(
