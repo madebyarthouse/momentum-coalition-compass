@@ -113,11 +113,11 @@ export const VennPage = ({
   return (
     <div
       className={clsx(
-        "w-[1000px] xxl:w-[1200px] max-w-full flex flex-col twp",
+        "w-[1000px] xxl:w-[1200px] max-w-full flex flex-col twp text-base",
         embed && "md:border-l border-solid border-black"
       )}
     >
-      <div className="px-3 md:px-5 lg:px-10 lg:sticky lg:z-50 shadow-sm bg-lightBeige lg:top-0 xl:px-14 xxl:px-16 py-5 border-b lg:border-r border-black  flex sm:flex-row flex-col lg:gap-10 justify-between items-start gap-4">
+      <div className="px-3 md:px-5 lg:px-10 lg:sticky lg:z-50 shadow-sm bg-lightBeige lg:top-0 xl:px-14 xxl:px-16 py-5 border-b lg:border-r border-solid border-black  flex sm:flex-row flex-col lg:gap-10 justify-between items-start gap-4">
         <div className="flex flex-col w-full sm:w-fit">
           <span className="font-semibold text-sm border border-black border-b-0 border-solid md:text-base px-3 py-1">
             Anzeige-Modus ({combinations.length}):
@@ -147,7 +147,7 @@ export const VennPage = ({
               </div>
             </summary>
 
-            <div className="flex flex-col border p-3 gap-10 border-black">
+            <div className="flex flex-col border p-3 gap-10 border-black border-solid">
               <PartiesFilter
                 parties={election?.election.parties}
                 selectedParties={filteredParties}

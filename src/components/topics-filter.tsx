@@ -53,7 +53,7 @@ export const TopicsFilter = ({
             }}
             className="notouch:hover:bg-peach text-center w-fit py-3 block px-3 focus-visible:bg-peach  data-[active=true]:bg-peach bg-peach/40 font-semibold data-[active=true]:text-white notouch:hover:text-white focus-visible:text-white rounded-md"
           >
-            <span>
+            <span className="text-sm">
               {selectedTopics.length === Object.keys(topics).length
                 ? "Keines auswählen"
                 : "Alle auswählen"}
