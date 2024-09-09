@@ -119,11 +119,11 @@ export const VennPage = ({
     >
       <div className="px-3 md:px-5 lg:px-10 lg:sticky lg:z-50 shadow-sm bg-lightBeige lg:top-0 xl:px-14 xxl:px-16 py-5 border-b lg:border-r border-black  flex sm:flex-row flex-col lg:gap-10 justify-between items-start gap-4">
         <div className="flex flex-col w-full sm:w-fit">
-          <span className="font-semibold text-sm border border-black border-b-0 md:text-base px-3 py-1">
+          <span className="font-semibold text-sm border border-black border-b-0 border-solid md:text-base px-3 py-1">
             Anzeige-Modus ({combinations.length}):
           </span>
           <select
-            className="px-3 py-2"
+            className="px-3 py-2 text-base"
             value={mode}
             onChange={(event) =>
               setMode(
@@ -141,7 +141,7 @@ export const VennPage = ({
         <div className="flex flex-row items-start">
           <details className="flex flex-col  group w-full">
             <summary className="[&::-webkit-details-marker]:hidden flex sm:justify-end items-end  w-full">
-              <div className="flex text-lg justify-end group-open:border-b-0 font-semibold cursor-pointer px-2 py-1 md:w-fit items-end notouch:hover:bg-black transition-all focus-visible:bg-black notouch:hover:text-white group-open:bg-black group-open:text-white focus-visible:text-white border border-black gap-1">
+              <div className="flex text-lg justify-end group-open:border-b-0 font-semibold cursor-pointer px-2 py-1 md:w-fit items-end notouch:hover:bg-black transition-all focus-visible:bg-black notouch:hover:text-white group-open:bg-black group-open:text-white focus-visible:text-white border-solid border border-black gap-1">
                 <span>Filter</span>
                 <FilterIcon className="w-7 h-7" />
               </div>
