@@ -131,8 +131,8 @@ export const ElectionVennController = ({
       {showCredits && (
         <div className=" max-w-[700px] w-full flex flex-col gap-2">
           <p className="text-sm italic text-gray-600">
-            Hinweis: bei machen Koalitionsvarianten kann es technisch bedingt zu
-            kleineren Darstellungsfehlern kommen. Danke für das Verständnis.
+            Hinweis: bei manchen Koalitionsvarianten kann es technisch bedingt
+            zu kleineren Darstellungsfehlern kommen. Danke für das Verständnis.
           </p>
           <p>
             Entwickelt in Kooperation mit{" "}
