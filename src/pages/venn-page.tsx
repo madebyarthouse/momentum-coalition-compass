@@ -113,11 +113,11 @@ export const VennPage = ({
   return (
     <div
       className={clsx(
-        "w-[1000px] xxl:w-[1200px] max-w-full flex flex-col twp text-base",
-        embed && "md:border-l border-solid border-black"
+        "w-[1000px] xxl:w-[1200px] max-w-full mx-auto flex flex-col twp text-base",
+        embed && "md:border-l border-l-solid border-black"
       )}
     >
-      <div className="px-3 md:px-5 lg:px-10 lg:sticky lg:z-50 shadow-sm bg-lightBeige lg:top-0 xl:px-14 xxl:px-16 py-5 border-b lg:border-r border-solid border-black  flex sm:flex-row flex-col lg:gap-10 justify-between items-start gap-4">
+      <div className="px-3 md:px-5 lg:px-10 lg:sticky lg:z-50 shadow-sm bg-lightBeige lg:top-0 xl:px-14 xxl:px-16 py-5 border-b lg:border-r border-b-solid lg:border-r-solid border-black  flex sm:flex-row flex-col lg:gap-10 justify-between items-start gap-4">
         <div className="flex flex-col w-full sm:w-fit">
           <span className="font-semibold text-sm border border-black border-b-0 border-solid md:text-base px-3 py-1">
             Anzeige-Modus ({combinations.length}):
