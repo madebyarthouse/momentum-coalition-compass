@@ -114,7 +114,7 @@ export const VennPage = ({
     <div
       className={clsx(
         "w-[1000px] xxl:w-[1200px] max-w-full flex flex-col twp",
-        embed && "md:border-l border-black"
+        embed && "md:border-l border-solid border-black"
       )}
     >
       <div className="px-3 md:px-5 lg:px-10 lg:sticky lg:z-50 shadow-sm bg-lightBeige lg:top-0 xl:px-14 xxl:px-16 py-5 border-b lg:border-r border-black  flex sm:flex-row flex-col lg:gap-10 justify-between items-start gap-4">
@@ -123,7 +123,7 @@ export const VennPage = ({
             Anzeige-Modus ({combinations.length}):
           </span>
           <select
-            className="px-3 py-2 text-base"
+            className="px-3 py-2 text-base appearance-none border-solid border-black border"
             value={mode}
             onChange={(event) =>
               setMode(
@@ -169,7 +169,7 @@ export const VennPage = ({
                   setSortDirection("asc");
                 }
               }}
-              className="px-3 py-1 border-black border font-semibold notouch:hover:bg-black transition-all focus-visible:bg-black notouch:hover:text-white text-lg flex items-center focus-visible:text-white gap-1"
+              className="px-3 py-1 border-solid border-black border font-semibold notouch:hover:bg-black transition-all focus-visible:bg-black notouch:hover:text-white text-lg flex items-center focus-visible:text-white gap-1"
             >
               Sort{" "}
               <ArrowDown
