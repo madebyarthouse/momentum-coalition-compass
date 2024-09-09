@@ -11,8 +11,16 @@ import clsx from "clsx";
 
 export const VennPage = ({
   election,
+  sourcePath = "",
+  breakPoint = "tablet",
+  showCredits = false,
+  embed = false,
 }: {
   election: WahlkabineElectionWrapperMinimal;
+  showCredits?: boolean;
+  sourcePath?: string;
+  breakPoint?: "laptop" | "tablet";
+  embed?: boolean;
 }) => {
   const parties = election?.election.parties;
   const id = useId();
@@ -103,7 +111,12 @@ export const VennPage = ({
   }, [parties, mode, filteredParties, partyForId, election, sortDirection]);
 
   return (
-    <div className="w-[1000px] xxl:w-[1200px] max-w-full flex flex-col">
+    <div
+      className={clsx(
+        "w-[1000px] xxl:w-[1200px] max-w-full flex flex-col",
+        embed && "md:border-l border-black"
+      )}
+    >
       <div className="px-3 md:px-5 lg:px-10 lg:sticky lg:z-50 shadow-sm bg-lightBeige lg:top-0 xl:px-14 xxl:px-16 py-5 border-b lg:border-r border-black  flex sm:flex-row flex-col lg:gap-10 justify-between items-start gap-4">
         <div className="flex flex-col w-full sm:w-fit">
           <span className="font-semibold text-sm border border-black border-b-0 md:text-base px-3 py-1">
@@ -187,10 +200,11 @@ export const VennPage = ({
                   defaultSelectedParties={combo}
                   filteredParties={filteredParties}
                   showEmbedCode
+                  sourcePath={sourcePath}
                   filteredTopics={selectedTopics}
                   padding="large"
-                  showCredits={false}
-                  breakPoint="tablet"
+                  showCredits={showCredits}
+                  breakPoint={breakPoint}
                   resetToDefault={mode !== "single"}
                 />
               </div>

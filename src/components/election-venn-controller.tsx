@@ -188,7 +188,7 @@ export const ElectionVennController = ({
             <pre className="overflow-auto whitespace-pre bg-white p-5">
               {`
   <link rel="stylesheet" href="https://momentum-coalition-compass.pages.dev/styles.css" />
-  <div id="election-venn" class="py-8 md:py-10 px-2 md:px-5 lg:px-10 twp"></div>
+  <div id="election-venn" class="twp"></div>
   <script src="https://momentum-coalition-compass.pages.dev/momentum-venn.js"></script>
 
   <script>
@@ -201,6 +201,7 @@ export const ElectionVennController = ({
       /* defaultSelectedParties: defaultSelectedParties, */
       sourcePath: "https://momentum-coalition-compass.pages.dev",
       breakPoint: "tablet",
+      showCredits: true,
       /* defaultSelectedParties: defaultSelectedParties, */
       /* resetToDefault = true, */
     });

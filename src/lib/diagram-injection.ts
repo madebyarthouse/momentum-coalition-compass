@@ -1,7 +1,7 @@
 import React from "react";
-import { ElectionVennController } from "../components/election-venn-controller";
 import ReactDOM from "react-dom/client";
 import { WahlkabineElectionWrapperMinimal } from "../wahlkabine-data/types";
+import { VennPage } from "../pages/venn-page";
 
 const hydrateElectionVennController = ({
   election,
@@ -21,12 +21,14 @@ const hydrateElectionVennController = ({
   }
 
   ReactDOM.createRoot(root).render(
-    React.createElement(ElectionVennController, {
+    React.createElement(VennPage, {
       election: election,
-      defaultSelectedParties: defaultSelectedParties,
+      // defaultSelectedParties: defaultSelectedParties,
       sourcePath: sourcePath,
-      showEmbedCode: true,
+      // showEmbedCode: true,
       breakPoint: breakPoint,
+      showCredits: true,
+      embed: true,
     })
   );
 };
