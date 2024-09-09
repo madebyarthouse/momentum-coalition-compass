@@ -113,7 +113,7 @@ export const VennPage = ({
   return (
     <div
       className={clsx(
-        "w-[1000px] xxl:w-[1200px] max-w-full flex flex-col",
+        "w-[1000px] xxl:w-[1200px] max-w-full flex flex-col twp",
         embed && "md:border-l border-black"
       )}
     >
