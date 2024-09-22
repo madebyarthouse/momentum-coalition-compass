@@ -4,11 +4,12 @@ import { Chart, ChartConfiguration, registerables } from "chart.js";
 import { combineColors, rgbaString } from "../utils/colors";
 import { VennDetails } from "./venn-details";
 import { getPartyColorByAbbreviation } from "../utils/partiesWithColors";
-import { useLocalStorage, useMediaQuery } from "@uidotdev/usehooks";
+import { useMediaQuery } from "@uidotdev/usehooks";
 import clsx from "clsx";
 import { useShare } from "../hooks/use-share";
 import { ShareIcon } from "lucide-react";
 import { createPortal } from "react-dom";
+import { useVersionendLocalStorage } from "../hooks/use-versionend-local-storage";
 
 Chart.register(...registerables);
 
@@ -61,7 +62,10 @@ export const ChartVenn = ({
     ? 115
     : 100;
 
-  const [scale, setScale] = useLocalStorage(`scale-${id}`, defaultScale);
+  const [scale, setScale] = useVersionendLocalStorage(
+    `scale-${id}`,
+    defaultScale
+  );
 
   useEffect(() => {
     const handleClickOutside = () => {

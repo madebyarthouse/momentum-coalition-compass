@@ -17,6 +17,12 @@ import { WahlkabineElection, WahlkabineElectionWrapperMinimal } from "./types";
           questions: election.election.questions.map((question) => ({
             ...question,
             text: getTextFromHtml(question.text),
+            answers: question.answers.map((answer) => ({
+              ...answer,
+              party_abbreviation: election.election.parties.find(
+                (party) => party._id === answer.party_id
+              )?.abbreviation,
+            })),
           })),
           editorialTeam: undefined,
           partners: undefined,

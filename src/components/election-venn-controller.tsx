@@ -1,14 +1,15 @@
 import { useCallback, useId, useMemo } from "react";
 import { WahlkabineElectionWrapperMinimal } from "../wahlkabine-data/types";
 import { ChartVenn } from "./venn-diagramm";
-import { useLocalStorage } from "@uidotdev/usehooks";
 import clsx from "clsx";
 import { Details } from "./details";
 import { PartiesFilter } from "./parties-filter";
-import { buildElectionVennData } from "../utils";
+import { buildElectionVennData, getRandomString } from "../utils";
+import { useVersionendLocalStorage } from "../hooks/use-versionend-local-storage";
 
 export const ElectionVennController = ({
   election,
+  isSingleMode,
   defaultSelectedParties,
   filteredParties,
   showEmbedCode = false,
@@ -19,6 +20,7 @@ export const ElectionVennController = ({
   resetToDefault = false,
 }: {
   election: WahlkabineElectionWrapperMinimal;
+  isSingleMode?: boolean;
   defaultSelectedParties?: string[];
   showEmbedCode?: boolean;
   sourcePath?: string;
@@ -32,16 +34,21 @@ export const ElectionVennController = ({
   const id = useId();
   const parties = filteredParties
     ? election?.election.parties.filter((party) =>
-        filteredParties.includes(party._id)
+        filteredParties.includes(party.abbreviation)
       )
     : election?.election.parties;
-  const randomParties = parties
-    .map((party) => party._id)
-    .sort(() => Math.random() - 0.5)
-    .slice(0, 3);
 
-  const [selectedParties, setSelectedParties] = useLocalStorage<string[]>(
-    `selected-parties-${id}-${election._id}-${filteredParties?.join("-")}`,
+  const randomParties = getRandomString(
+    parties.map((party) => party.abbreviation),
+    3
+  );
+
+  const [selectedParties, setSelectedParties] = useVersionendLocalStorage<
+    string[]
+  >(
+    isSingleMode
+      ? `selected-parties`
+      : `selected-parties-${id}-${election._id}-${filteredParties?.join("-")}`,
     defaultSelectedParties ?? randomParties ?? []
   );
 
@@ -49,21 +56,23 @@ export const ElectionVennController = ({
     ? selectedParties.filter((party) => filteredParties.includes(party))
     : selectedParties;
 
-  const partyForId = useCallback(
-    (partyId: string) => {
-      return election?.election.parties.find((party) => party._id === partyId);
+  const partyForAbbreviation = useCallback(
+    (partyAbbreviation: string) => {
+      return election?.election.parties.find(
+        (party) => party.abbreviation === partyAbbreviation
+      );
     },
     [election]
   );
 
   const vennData = useMemo(() => {
     return buildElectionVennData({
-      partyForId,
+      partyForAbbreviation,
       filteredSelectedParties,
       election,
       filteredTopics,
     });
-  }, [election, filteredSelectedParties, partyForId, filteredTopics]);
+  }, [election, filteredSelectedParties, partyForAbbreviation, filteredTopics]);
 
   const defaultPartiesAreSelected = defaultSelectedParties
     ? selectedParties.every((party) => defaultSelectedParties.includes(party))
@@ -79,7 +88,7 @@ export const ElectionVennController = ({
         breakPoint === "laptop" && "xl:w-[1200px]"
       )}
     >
-      {filteredSelectedParties.length === 0 ? (
+      {vennData.rows.length === 0 ? (
         <p className="flex items-center min-h-[350px] md:min-h-[500px] justify-center h-full w-full font-semibold">
           Bitte wähle mindestens 1 Partei aus.
         </p>
@@ -91,7 +100,7 @@ export const ElectionVennController = ({
         </p>
       ) : null}
 
-      {filteredSelectedParties.length > 0 && hasTopics ? (
+      {vennData.rows.length > 0 && hasTopics ? (
         <ChartVenn
           data={vennData.rows}
           label={`${election?.title}`}
@@ -103,13 +112,7 @@ export const ElectionVennController = ({
       ) : null}
 
       <PartiesFilter
-        parties={
-          filteredParties
-            ? election?.election.parties.filter((party) =>
-                filteredParties.includes(party._id)
-              )
-            : election?.election.parties
-        }
+        parties={parties}
         selectedParties={filteredSelectedParties}
         setSelectedParties={setSelectedParties}
         maxSelected={4}
