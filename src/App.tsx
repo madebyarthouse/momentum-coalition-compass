@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { WahlkabineElectionWrapperMinimal } from "./wahlkabine-data/types";
-import { useLocalStorage } from "@uidotdev/usehooks";
 import { Blend } from "lucide-react";
 import clsx from "clsx";
 import { Details } from "./components/details";
@@ -9,6 +8,7 @@ import { AnswersPerQuestionPage } from "./pages/answers-per-question-page";
 import { VennPage } from "./pages/venn-page";
 
 import "./index.css";
+import { useVersionendLocalStorage } from "./hooks/use-versionend-local-storage";
 
 function App() {
   const [data, setData] = useState<WahlkabineElectionWrapperMinimal[] | null>(
@@ -18,7 +18,7 @@ function App() {
   const isLoading = !data && !error;
   const isError = !!error;
 
-  const [selectedElectionId, setSelectedElectionId] = useLocalStorage<
+  const [selectedElectionId, setSelectedElectionId] = useVersionendLocalStorage<
     string | null
   >("selected-election-id", data?.[0]?._id);
 
@@ -26,10 +26,9 @@ function App() {
     (election) => election._id === selectedElectionId
   );
 
-  const [selectedPartyId, setSelectedPartyId] = useLocalStorage<string | null>(
-    "selected-party-id",
-    null
-  );
+  const [selectedPartyId, setSelectedPartyId] = useVersionendLocalStorage<
+    string | null
+  >("selected-party-id", null);
 
   const parties = selectedElection?.election.parties;
 
@@ -48,9 +47,8 @@ function App() {
     parties?.[0] ??
     null;
 
-  const [selectedQuestionIdx, setSelectedQuestionIdx] = useLocalStorage<
-    number | null
-  >("selected-question-index", null);
+  const [selectedQuestionIdx, setSelectedQuestionIdx] =
+    useVersionendLocalStorage<number | null>("selected-question-index", null);
 
   const selectedQuestion =
     selectedQuestionIdx !== null
@@ -58,7 +56,7 @@ function App() {
       : null;
 
   useEffect(() => {
-    fetch("/data-minimal-latest.json")
+    fetch("/data-minimal.json")
       .then((response) => response.json())
       .then((data) => {
         setData(data);

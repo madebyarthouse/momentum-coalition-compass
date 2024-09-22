@@ -51,6 +51,7 @@ export interface Question {
 
 export interface Answer {
   party_id: string;
+  party_abbreviation: string;
   consent: number;
   weight: number;
   comment?: string;

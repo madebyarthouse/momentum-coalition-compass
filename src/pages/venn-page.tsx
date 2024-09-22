@@ -1,13 +1,13 @@
-import { useLocalStorage } from "@uidotdev/usehooks";
 import { WahlkabineElectionWrapperMinimal } from "../wahlkabine-data/types";
 import { useCallback, useId, useMemo } from "react";
 import { ElectionVennController } from "../components/election-venn-controller";
-import { buildElectionVennData, getTopics } from "../utils";
-import { ArrowDown, ArrowUp, FilterIcon } from "lucide-react";
+import { buildElectionVennData, getRandomString, getTopics } from "../utils";
+import { ArrowDown, FilterIcon } from "lucide-react";
 import { TopicsFilter } from "../components/topics-filter";
 import { PartiesFilter } from "../components/parties-filter";
 import { LazyList } from "../components/lazy-list";
 import clsx from "clsx";
+import { useVersionendLocalStorage } from "../hooks/use-versionend-local-storage";
 
 export const VennPage = ({
   election,
@@ -23,45 +23,48 @@ export const VennPage = ({
   embed?: boolean;
 }) => {
   const parties = election?.election.parties;
-  const id = useId();
-  const [mode, setMode] = useLocalStorage<
+  const [mode, setMode] = useVersionendLocalStorage<
     "single" | "2-combos" | "3-combos" | "all"
-  >(`mode-${election._id}`, "single");
+  >(`mode`, "single");
 
   const topics = getTopics(election);
 
-  const [sortDirection, setSortDirection] = useLocalStorage<"asc" | "desc">(
-    `sort-direction-${id}-${election._id}`,
-    "desc"
+  const [sortDirection, setSortDirection] = useVersionendLocalStorage<
+    "asc" | "desc"
+  >(`sort-direction`, "desc");
+
+  const [selectedTopics, setSelectedTopics] = useVersionendLocalStorage<
+    string[]
+  >(`selected-topics-${election._id}`, Object.keys(topics));
+
+  const [filteredParties, setFilteredParties] = useVersionendLocalStorage<
+    string[]
+  >(
+    `filtered-parties`,
+    election?.election.parties.map((party) => party.abbreviation)
   );
 
-  const [selectedTopics, setSelectedTopics] = useLocalStorage<string[]>(
-    `selected-topics-${id}-${election._id}`,
-    Object.keys(topics)
-  );
-
-  const [filteredParties, setFilteredParties] = useLocalStorage<string[]>(
-    `filtered-parties-${id}-${election._id}`,
-    election?.election.parties.map((party) => party._id)
-  );
-
-  const partyForId = useCallback(
-    (partyId: string) => {
-      return election?.election.parties.find((party) => party._id === partyId);
+  const partyForAbbreviation = useCallback(
+    (partyAbbreviation: string) => {
+      return election?.election.parties.find(
+        (party) => party.abbreviation === partyAbbreviation
+      );
     },
     [election]
   );
 
   const combinations = useMemo(() => {
     const filterCombinations = (combination: string[]) => {
-      return combination.every((partyId) => filteredParties.includes(partyId));
+      return combination.every((partyAbbreviation) =>
+        filteredParties.includes(partyAbbreviation)
+      );
     };
 
-    const partyIds = parties.map((party) => party._id);
-    const randomParties = partyIds
-      .filter((party) => filteredParties.includes(party))
-      .sort(() => Math.random() - 0.5)
-      .slice(0, mode === "2-combos" ? 2 : 3);
+    const partyAbbreviations = parties.map((party) => party.abbreviation);
+    const randomParties = getRandomString(
+      partyAbbreviations.filter((party) => filteredParties.includes(party)),
+      mode === "2-combos" ? 2 : 3
+    );
 
     const combinations: string[][] = [];
 
@@ -71,7 +74,7 @@ export const VennPage = ({
 
     if (mode === "2-combos" || mode == "all") {
       combinations.push(
-        ...getAllCombinations(partyIds, 2).filter(
+        ...getAllCombinations(partyAbbreviations, 2).filter(
           (combination) => combination.length === 2
         )
       );
@@ -79,7 +82,7 @@ export const VennPage = ({
 
     if (mode === "3-combos" || mode == "all") {
       combinations.push(
-        ...getAllCombinations(partyIds, 3).filter(
+        ...getAllCombinations(partyAbbreviations, 3).filter(
           (combination) => combination.length === 3
         )
       );
@@ -87,13 +90,13 @@ export const VennPage = ({
 
     combinations.sort((a, b) => {
       const aMatching = buildElectionVennData({
-        partyForId,
+        partyForAbbreviation,
         filteredSelectedParties: a,
         election,
       });
 
       const bMatching = buildElectionVennData({
-        partyForId,
+        partyForAbbreviation,
         filteredSelectedParties: b,
         election,
       });
@@ -108,7 +111,14 @@ export const VennPage = ({
     const filteredCombinations = combinations.filter(filterCombinations);
 
     return filteredCombinations;
-  }, [parties, mode, filteredParties, partyForId, election, sortDirection]);
+  }, [
+    parties,
+    mode,
+    filteredParties,
+    partyForAbbreviation,
+    election,
+    sortDirection,
+  ]);
 
   return (
     <div
@@ -196,6 +206,7 @@ export const VennPage = ({
                   }-${mode}-${sortDirection}-venn-controller-${combo.join(
                     "-"
                   )}`}
+                  isSingleMode={mode === "single"}
                   election={election}
                   defaultSelectedParties={combo}
                   filteredParties={filteredParties}

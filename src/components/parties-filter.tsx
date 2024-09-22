@@ -21,8 +21,8 @@ export const PartiesFilter = ({
   const id = useId();
 
   parties.sort((a, b) => {
-    const isSelectedA = selectedParties.includes(a._id);
-    const isSelectedB = selectedParties.includes(b._id);
+    const isSelectedA = selectedParties.includes(a.abbreviation);
+    const isSelectedB = selectedParties.includes(b.abbreviation);
 
     if (isSelectedA && !isSelectedB) {
       return -1;
@@ -38,7 +38,7 @@ export const PartiesFilter = ({
   return (
     <aside className="flex flex-row gap-3 flex-wrap max-w-[700px] w-full">
       {parties.map((party) => {
-        const isSelected = selectedParties.includes(party._id);
+        const isSelected = selectedParties.includes(party.abbreviation);
 
         const isDisabled =
           maxSelected !== undefined
@@ -57,8 +57,8 @@ export const PartiesFilter = ({
             whileHover={{
               opacity: isSelected ? 0.9 : 1,
             }}
-            layoutId={`${id}-checkbox-${party._id}`}
-            key={`${id}-checkbox-${party._id}`}
+            layoutId={`${id}-checkbox-${party.abbreviation}`}
+            key={`${id}-checkbox-${party.abbreviation}`}
             className={clsx(
               "flex flex-row gap-2 transition-opacity items-center px-2 py-1 text-white font-semibold rounded-sm shadow-md",
               isDisabled && "opacity-50 cursor-not-allowed",
@@ -67,7 +67,7 @@ export const PartiesFilter = ({
           >
             <input
               type="checkbox"
-              value={party._id}
+              value={party.abbreviation}
               className="disabled:opacity-50 disabled:cursor-not-allowed"
               disabled={isDisabled}
               checked={isSelected}
@@ -75,11 +75,11 @@ export const PartiesFilter = ({
                 if (isSelected) {
                   setSelectedParties(
                     selectedParties.filter(
-                      (selectedParty) => selectedParty !== party._id
+                      (selectedParty) => selectedParty !== party.abbreviation
                     )
                   );
                 } else {
-                  setSelectedParties([...selectedParties, party._id]);
+                  setSelectedParties([...selectedParties, party.abbreviation]);
                 }
               }}
             />

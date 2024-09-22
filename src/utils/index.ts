@@ -16,14 +16,18 @@ export const slugify = (text: string) => {
     .replace(/-+/g, "-");
 };
 
+export const getRandomString = (arr: string[], size: number): string[] => {
+  return arr.sort(() => Math.random() - 0.5).slice(0, size);
+};
+
 export const buildElectionVennData = ({
-  partyForId,
+  partyForAbbreviation,
   filteredSelectedParties,
   election,
   filteredTopics,
 }: {
-  partyForId: (
-    partyId: string
+  partyForAbbreviation: (
+    partyAbbreviation: string
   ) =>
     | WahlkabineElectionWrapperMinimal["election"]["parties"][number]
     | undefined;
@@ -41,7 +45,7 @@ export const buildElectionVennData = ({
     values: string[];
   }[] = election.election.parties
     .filter((party) => {
-      return filteredSelectedParties.includes(party._id);
+      return filteredSelectedParties.includes(party.abbreviation);
     })
     .map((party) => ({
       label: `${party.abbreviation}`,
@@ -50,7 +54,7 @@ export const buildElectionVennData = ({
 
   election.election.questions.forEach((question) => {
     question.answers.forEach((answer) => {
-      const partyForAnswer = partyForId(answer.party_id);
+      const partyForAnswer = partyForAbbreviation(answer.party_abbreviation);
 
       if (!partyForAnswer) {
         return;
@@ -97,7 +101,7 @@ export const buildElectionVennData = ({
 
       return acc;
     }, {} as Record<string, number>)
-  ).filter(([value, count]) => count === rows.length).length;
+  ).filter(([, count]) => count === rows.length).length;
 
   return {
     rows,
